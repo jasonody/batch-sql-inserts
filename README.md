@@ -7,7 +7,7 @@ INSERT INTO my_table VALUES(1, 2, 3)
 INSERT INTO my_table VALUES(1, 2, 3)
 INSERT INTO my_table VALUES(1, 2, 3)
 ```
-is convert to:
+is converted to:
 ```
 INSERT INTO my_table
     VALUES(1, 2, 3),
