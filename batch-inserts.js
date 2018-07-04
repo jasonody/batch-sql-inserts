@@ -31,27 +31,31 @@ const lineTransform = new Transform({
 
 const batchTransform = new Transform({
     transform(chunk, encoding, callback) {
-        this.lines.push(chunk.toString())
-
-        if (this.lines.length == batchSize) {
-            const output = `INSERT INTO ${tableName}\n\t${this.lines.join(',\n\t')}`
-            this.push(output + ';\n')
-
-            this.lines = []
+        if (this.lineCount % batchSize === 0) {
+            this.push(`\nINSERT INTO ${tableName}\n\t${chunk.toString()}`)
+        } else {
+            this.push(`,\n\t${chunk.toString()}`)
         }
+
+        this.lineCount++
 
         callback(null)
     }
 })
-batchTransform.lines = []
+batchTransform.lineCount = 0
 
 const progress = new Transform({
     transform(chunk, encoding, callback) {
-        process.stdout.write('.')
+        if (this.count % batchSize === 0) {
+            process.stdout.write('.')
+        }
+
+        this.count++
 
         callback(null, chunk)
     }
 })
+progress.count = 0
 
 fs.createReadStream('inserts.sql')
     .pipe(lineTransform)

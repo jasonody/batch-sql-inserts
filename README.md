@@ -7,13 +7,13 @@ INSERT INTO my_table VALUES(1, 2, 3)
 INSERT INTO my_table VALUES(1, 2, 3)
 INSERT INTO my_table VALUES(1, 2, 3)
 ```
-The above is convert to:
+is convert to:
 ```
 INSERT INTO my_table
     VALUES(1, 2, 3),
     VALUES(1, 2, 3),
     VALUES(1, 2, 3),
-    VALUES(1, 2, 3);
+    VALUES(1, 2, 3)
 ```
 
 ## Usage
